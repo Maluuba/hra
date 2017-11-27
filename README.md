@@ -5,7 +5,7 @@ This repository hosts the code published along with the following NIPS article (
 
 For more information about this article, see the following blog posts:
 
-* http://www.maluuba.com/hra
+* https://www.maluuba.com/hra
 * https://blogs.microsoft.com/ai/2017/06/14/divide-conquer-microsoft-researchers-used-ai-master-ms-pac-man/
 
  # Dependencies
