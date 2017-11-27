@@ -1,0 +1,22 @@
+nb_experiments: 1
+nb_epochs: 200
+epoch_size: 1
+nb_eval_episodes: 5
+folder_location: '/results/'
+folder_name: 'tabular_'
+random_seed: 7654
+
+aggregator_epsilon: 1.0
+aggregator_final_epsilon: 1.0
+aggregator_decay_start: 1
+aggregator_decay_steps: 1
+
+init_q: 0.0
+gamma: 0.99
+alpha: 0.001
+final_alpha: 0.001
+alpha_decay_steps: 1
+alpha_decay_start: 1
+
+learning_method: mean  # mean or max
+use_gvf: True
