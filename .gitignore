@@ -9,6 +9,5 @@ __pycache__
 *.csv
 *.bak
 *.npy
-*result*
 *render*
 test*

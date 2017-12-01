@@ -1,0 +1,27 @@
+rendering: False
+nb_experiments: 1
+random_seed: 1234
+total_eps: 5000
+is_learning: True
+eps_per_epoch: 10
+max_start_nullops: 0
+is_testing: True
+eps_per_test: 100
+episode_max_len: 300
+folder_location: '/results/'
+test: False
+
+epsilon: 1.0
+annealing: False
+final_epsilon: 1.0
+test_epsilon: 0.0
+
+learning_rate: 0.001
+minibatch_size: 32
+history_len: 1
+replay_max_size: 10000
+replay_min_size: 1000
+learning_frequency: 4
+update_freq: 100
+action_dim: 1
+num_units: 250
