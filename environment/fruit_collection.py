@@ -34,7 +34,7 @@ class FruitCollection(object):
         self.pass_wall_rows = None
         self.init_lives = deepcopy(self.lives)
         self.step_reward = 0.0
-        self.possible_fruits = None
+        self.possible_fruits = []
         self.state_mode = state_mode    # how the returned state look like ('pixel' or '1hot' or 'multi-head')
         self.nb_fruits = None
         self.scr_w = None
@@ -359,9 +359,12 @@ class FruitCollection(object):
             raise ValueError('Environment has already been terminated.')
         if self.step_id >= self.game_length - 1:
             self.game_over = True
+            if self.state_mode == 'mini':
+                head_reward = np.zeros(len(self.possible_fruits), dtype=np.float32)
+            else:
+                head_reward = []
             return self.get_state(), 0., self.game_over, \
-                   {'ghost': None, 'fruit': None, 'hit_wall': False,
-                    'head_reward': np.zeros(len(self.possible_fruits), dtype=np.float32)}
+                   {'ghost': None, 'fruit': None, 'hit_wall': False, 'head_reward': head_reward}
         last_player_position = deepcopy([self.player_pos_x, self.player_pos_y])
         hit_wall = self._move_player(action)
         if hit_wall:
@@ -386,10 +389,14 @@ class FruitCollection(object):
         else:
             ghost_reward = 0.
         caught_fruit, caught_fruit_idx = self._check_fruit()
-        head_reward = np.zeros(len(self.possible_fruits), dtype=np.float32)
+        if self.state_mode == 'mini':
+            head_reward = np.zeros(len(self.possible_fruits), dtype=np.float32)
+        else:
+            head_reward = []
         if caught_fruit is not None:
             fruit_reward = self.reward_scheme['fruit']
-            head_reward[self.possible_fruits.index(caught_fruit)] = 1.
+            if self.state_mode == 'mini':
+                head_reward[self.possible_fruits.index(caught_fruit)] = 1.
         else:
             fruit_reward = 0.
         if self.lives == 0:
@@ -599,7 +606,7 @@ def test(mode, fruit, ghost, save):
         raise ValueError('Incorrect mode.')
     env = e(rendering=True, lives=1, is_fruit=fruit, is_ghost=ghost, image_saving=save)
     print('state shape', env.state_shape)
-    for _ in range(10):
+    for _ in range(1):
         env.reset()
         env.render()
         while not env.game_over:
